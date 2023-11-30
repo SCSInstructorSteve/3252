@@ -1,0 +1,130 @@
+SELECT invoiceID, invoiceDate, invoiceAmount – discount AS TotalAmount
+FROM Invoices
+
+--where
+
+SELECT *
+FROM invoice
+WHERE NOT total > 10 AND total <> 0.99;
+
+
+SELECT * FROM artist WHERE name LIKE 'Bl%'
+--or
+SELECT * FROM artist WHERE name LIKE '%y'
+--or
+SELECT * FROM artist WHERE name LIKE ’% the %' OR name 
+LIKE '% A %'
+
+
+SELECT * 
+FROM artist
+WHERE artistId IN (3,4,5)
+
+
+SELECT CustomerId, Total
+FROM invoice
+WHERE total BETWEEN 0 AND 1
+
+
+--Order By
+
+SELECT * 
+FROM artist
+WHERE country = 'US' or country = 'Canada'
+ORDER BY lastname
+
+
+--Case Statement
+
+SELECT total, CASE WHEN total > 10 THEN 'Hey big spender!' 
+    WHEN total < 5 THEN 'Dig this blender!' 
+    ELSE 'Rainbow suspenders!' END
+FROM invoices;
+
+--Distinct
+SELECT DISTINCT city
+FROM customer;
+
+
+
+--Scalar Function
+
+SELECT DISTINCT UPPER(city), LOWER(city), 
+LENGTH(city) 
+FROM customer;
+
+--Group By
+
+SELECT column_name, aggregate_function(column_name)
+FROM table_name
+WHERE column_name operator value
+GROUP BY column_name;
+
+
+--Having
+
+SELECT DISTINCT customerid
+FROM invoice
+WHERE total > 1
+GROUP BY customerid
+HAVING SUM(total) > 40 AND COUNT(customerid) > 5;
+
+
+
+--Inner Join
+
+SELECT a.TrackId, a.Name, b.Title 
+FROM track a JOIN album b
+ON a.AlbumId = b.AlbumId;
+
+SELECT a.TrackId, a.Name, b.Title 
+FROM track a, album b
+WHERE a.AlbumId = b.AlbumId;
+
+
+--Left Join 
+
+SELECT 
+   artists.ArtistId, 
+   albumId
+FROM artists
+LEFT JOIN albums 
+ON albums.ArtistId = artist.ArtistId
+ORDER BY AlbumId;
+
+
+--Self Join
+
+SELECT 
+m.FirstName || ' ' || m.LastName AS manager,
+e.FirstName || ' ' || e.LastName AS directReport
+FROM employees e
+INNER JOIN employees m 
+ON m.EmployeeId = e.ReportsTo
+ORDER BY manager;
+
+
+--Union
+
+SELECT name FROM artist WHERE name LIKE 'a%' OR name LIKE 'A%'
+UNION 
+SELECT name FROM artist WHERE name LIKE '%e' OR name LIKE '%E';
+
+--Union All
+
+SELECT name FROM artist WHERE name LIKE 'a%' OR name LIKE 'A%'
+UNION ALL
+SELECT name FROM artist WHERE name LIKE '%e' OR name LIKE '%E';
+
+--Intersect
+
+SELECT name FROM artist WHERE name LIKE 'a%' OR name LIKE 'A%'
+INTERSECT
+SELECT name FROM artist WHERE name LIKE '%e' OR name LIKE '%E';
+
+
+
+
+
+
+

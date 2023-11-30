@@ -1,0 +1,88 @@
+sqlite3 "f:\SQLite\DB\chinook.db"
+
+
+Answers
+1a
+SELECT FirstName || " " || LastName As FullName, Company,  City, State
+FROM customers
+ORDER BY city;
+
+1b
+
+SELECT FirstName || " " || LastName As FullName, Company, City, State
+FROM customers
+WHERE Country IN ("Canada", "USA")
+ORDER BY city;
+
+1c
+
+SELECT FirstName || " " || LastName As FullName, Company, City, State
+FROM customers
+WHERE Country IN ("Canada", "USA")
+AND LastName Like "M%"
+ORDER BY city;
+
+WHERE Lastname like "M%" AND (Country = "Canada" or country = "USA")
+
+2a
+
+SELECT a.Name, b.Title, t.Name
+FROM artists a JOIN albums b
+ON a.artistid = b.artistid
+JOIN tracks t 
+ON b.albumid = t.albumID
+ORDER by a.artistID;
+
+2b 
+
+SELECT a.Name, b.Title, t.Name
+FROM artists a JOIN albums b
+ON a.artistid = b.artistid
+JOIN tracks t 
+ON b.albumid = t.albumID
+WHERE t.Name Like "%dancing%"
+ORDER by a.artistID;
+
+2c 
+SELECT e.Firstname || " " || e.LastName AS Employee, m.FirstName || " " || m.LastName as Manager
+FROM employees e JOIN employees m
+ON e.ReportsTo = m.EmployeeId;
+
+
+
+2d
+
+SELECT e.Firstname || " " || e.LastName AS Employee, m.FirstName || " " || m.LastName as Manager
+FROM employees e LEFT OUTER JOIN employees m
+ON e.ReportsTo = m.EmployeeId;
+
+or
+
+
+SELECT 
+    e.FirstName || ' ' || e.LastName AS Employee,
+    CASE
+        WHEN e.EmployeeId = 1 THEN e.FirstName || ' ' || e.LastName || ' reports to himself'
+        ELSE m.FirstName || ' ' || m.LastName
+    END AS Manager
+FROM
+    Chinook.Employees e
+LEFT JOIN
+    Chinook.Employees m ON e.ReportsTo = m.EmployeeId;
+
+3a
+
+SELECT a.Title, Count(t.trackid) AS Number_of_Tracks
+FROM albums a JOIN tracks t
+ON a.AlbumID = t.AlbumID
+GROUP BY a.AlbumID;
+
+
+3b
+
+SELECT a.Title, Count(t.trackid) AS Number_of_Tracks
+FROM albums a JOIN tracks t
+ON a.AlbumID = t.AlbumID
+GROUP BY a.AlbumID
+HAVING Count(t.trackid) > 10;
+
