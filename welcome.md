@@ -1,4 +1,4 @@
-##Weclome to the 3252 GitHub page.
+# Weclome to the 3252 GitHub page.
 
 This repo contains all of the demo scripts used in class.
 
